@@ -1,6 +1,6 @@
 from constants import SHUFERSAL_COUPONS, WOLT_COUPONS, CouponsKind
 
-def optimized_algo(budget, kind):
+def optimized_algo(budget, kind, is_over_budget_allowed=False):
     options = get_options(kind)
     options.sort(reverse=True)
     dp = [0] + [-1] * budget  # Initialize a list to store the maximum value achievable for each sum
@@ -22,7 +22,7 @@ def optimized_algo(budget, kind):
 
     return result
 
-def greedy_algo(budget, kind):
+def greedy_algo(budget, kind, is_over_budget_allowed=False):
     options = get_options(kind)
     options.sort(reverse=True)  # Sort options in descending order for optimization
 
