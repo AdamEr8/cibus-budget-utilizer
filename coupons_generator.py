@@ -1,17 +1,17 @@
 from constants import SHUFERSAL_COUPONS, WOLT_COUPONS, CouponsKind
 
-def optimized_algo(input_number, kind):
+def optimized_algo(balance, kind):
     options = get_options(kind)
     options.sort(reverse=True)
-    dp = [0] + [-1] * input_number  # Initialize a list to store the maximum value achievable for each sum
+    dp = [0] + [-1] * balance  # Initialize a list to store the maximum value achievable for each sum
 
-    for i in range(1, input_number + 1):
+    for i in range(1, balance + 1):
         for option in options:
             if i - option >= 0 and dp[i - option] != -1:
                 dp[i] = max(dp[i], dp[i - option] + option)
 
     result = []
-    remaining = input_number
+    remaining = balance
 
     while remaining > 0:
         for option in options:
@@ -22,7 +22,7 @@ def optimized_algo(input_number, kind):
 
     return result
 
-def greedy_algo(input_number, kind):
+def greedy_algo(balance, kind):
     options = get_options(kind)
     options.sort(reverse=True)  # Sort options in descending order for optimization
 
@@ -30,7 +30,7 @@ def greedy_algo(input_number, kind):
     current_sum = 0
 
     for value in options:
-        while current_sum + value <= input_number:
+        while current_sum + value <= balance:
             result.append(value)
             current_sum += value
 
