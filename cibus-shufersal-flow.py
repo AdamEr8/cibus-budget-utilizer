@@ -1,3 +1,4 @@
+import json
 import requests
 from coupons_generator import optimized_algo, greedy_algo
 from constants import CouponsKind
@@ -40,12 +41,13 @@ def login(session):
 
 def get_budget(session):
     get_budget_payload = {
-        "mode": "raw",
         "type": "prx_get_budgets"
     }
     response = session.post(mysodexo_url, json=get_budget_payload, headers=headers)
-
-    return response
+    response_data = json.loads(response.text)
+    current_budget = response_data['data'][0]['CurrBudget']
+    
+    return int(float(current_budget))
 
 def add_to_cart(session, dish_price):
     add_to_cart_payload = {
@@ -71,6 +73,22 @@ def get_cart_info(session):
         "type": "prx_get_cart"
     }
     response = session.post(mysodexo_url, json=get_cart_payload, headers=headers)
+    if response.status_code != 200:
+        print("Getting cart information failed. Status code:", response.status_code)
+        exit()
+
+    # Print the cart information
+    cart_data = response.json()
+    print(cart_data)
+
+    return response
+
+def apply_order(session):
+    apply_order_payload = {
+        "type":"prx_apply_order",
+        "order_time":"15:00"
+    }
+    response = session.post(mysodexo_url, json=apply_order_payload, headers=headers)
     if response.status_code != 200:
         print("Getting cart information failed. Status code:", response.status_code)
         exit()
