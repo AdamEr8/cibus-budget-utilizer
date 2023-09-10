@@ -6,6 +6,7 @@ session = requests.Session()
 # Define the login information
 username = "<YOUR USERNAME HERE>"
 password = "<YOUR PASSWORD HERE>"
+company = "מיקרוסופט"
 
 # Define the additional header
 headers = {
@@ -18,7 +19,7 @@ login_payload = {
     "type": "prx_login",
     "user": username,
     "password": password,
-    "company": "",
+    "company": company,
     "remember": True
 }
 
