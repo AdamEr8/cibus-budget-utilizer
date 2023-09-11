@@ -17,18 +17,17 @@ budget = soc.get_budget()
 print("Budget:", budget)
 soc.fetch_voucher_options()
 optimizedAlgo = OptimizedVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = True, max_voucher = 100)
-coupons_prices = optimizedAlgo.genenrate_vouchers()
+voucher_prices = optimizedAlgo.genenrate_vouchers()
 
-for price in coupons_prices:
+for voucher in voucher_prices:
     # Step 3: Add item to the cart (using default dish_id)
-    soc.add_voucher_to_cart(price)
-
-# Step 4: Get cart information
-cart_info = soc.get_cart_info()
-print("Cart info:")
-pp(cart_info)
-# Step 5: Apply order
-# TODO: Apply_order (==Pay)
+    soc.add_voucher_to_cart(voucher)
+    # Step 4: Get cart information
+    cart_info = soc.get_cart_info()
+    print("Cart info:")
+    pp(cart_info)
+    # Step 5: Apply order
+    # TODO: Apply_order (==Pay)
     
 
 
