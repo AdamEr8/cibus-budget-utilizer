@@ -1,5 +1,6 @@
 from pprint import pprint as pp
-from coupons_generator import optimized_algo, greedy_algo
+from greedy_voucher_generator import GreedyVoucherGenerator
+from optimized_voucher_generator import OptimizedVoucherGenerator
 from constants import SHUFERSAL_COUPONS
 from shufersal_order_controller import ShufersalOrderController
 
@@ -15,7 +16,8 @@ soc.login()
 budget = soc.get_budget()
 print("Budget:", budget)
 soc.fetch_voucher_options()
-voucher_prices = greedy_algo(budget, SHUFERSAL_COUPONS)
+optimizedAlgo = OptimizedVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = True, max_voucher = 100)
+voucher_prices = optimizedAlgo.genenrate_vouchers()
 
 for voucher in voucher_prices:
     # Step 3: Add item to the cart (using default dish_id)
