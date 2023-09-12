@@ -21,13 +21,10 @@ voucher_prices = optimizedAlgo.genenrate_vouchers()
 
 for voucher in voucher_prices:
     # Step 3: Add item to the cart (using default dish_id)
+    soc.empty_cart()
     soc.add_voucher_to_cart(voucher)
-    # Step 4: Get cart information
-    cart_info = soc.get_cart_info()
-    print("Cart info:")
-    pp(cart_info)
     # Step 5: Apply order
-    # TODO: Apply_order (==Pay)
+    # TODO: soc.apply_order() # Apply_order (==Pay)
     
 
 
