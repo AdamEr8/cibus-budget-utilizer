@@ -118,15 +118,19 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: functionRuntime
         }
-		{
+		    {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
           value: 'https://fnstor7ee5ua3kvdo52.blob.core.windows.net/pack/app.zip'
         }
-		{
+        {
+          name: 'KeyVaultName'
+          value: keyVaultName
+        }
+		    {
           name: 'cibusUserName'
           value: cibusUserName
         }
-		{
+		    {
           name: 'cibusCompany'
           value: cibusCompany
         }
