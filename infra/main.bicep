@@ -2,7 +2,7 @@
 param location string = resourceGroup().location
 
 @description('Suffix for function app, storage account, and key vault names.')
-param appNameSuffix string = uniqueString(resourceGroup().id)
+param appNameSuffix string
 
 @description('Key Vault SKU name.')
 param keyVaultSku string = 'Standard'
@@ -85,6 +85,9 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: functionAppName
   location: location
   kind: 'functionapp,linux'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     reserved: true
     serverFarmId: hostingPlan.id
@@ -129,12 +132,16 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
       ]
     }
+    
   }
 }
 
 
 resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
   name: keyVaultName
+  dependsOn: [
+    functionApp
+  ]
   location: location
   properties: {
     tenantId: subscription().tenantId
@@ -142,7 +149,15 @@ resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' = {
       family: 'A'
       name: keyVaultSku
     }
-    accessPolicies: []
+    accessPolicies: [
+      {
+        objectId: functionApp.identity.principalId
+        tenantId: subscription().tenantId
+        permissions: {
+          secrets: ['get', 'list']
+        }
+      }
+    ]
   }
 }
 
