@@ -1,13 +1,32 @@
+import os
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 from pprint import pprint as pp
 from greedy_voucher_generator import GreedyVoucherGenerator
 from optimized_voucher_generator import OptimizedVoucherGenerator
 from constants import SHUFERSAL_COUPONS
 from shufersal_order_controller import ShufersalOrderController
 
+def get_key_vault_secret(key_vault_url, secret_name):
+    credential = DefaultAzureCredential()
+    secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+    try:
+        secret = secret_client.get_secret(secret_name)
+        cibus_pass_value = secret.value
+
+        return cibus_pass_value
+
+    except Exception as e:
+        print(f"Error retrieving secret: {str(e)}")
+        return None
+
+
 # Define the login information
-username = "<YOUR USERNAME HERE>"
-password = "<YOUR PASSWORD HERE>"
-company = "מיקרוסופט"
+username = os.environ.get("cibusUserName")
+company = os.environ.get("cibusCompany")
+key_vault_name = os.environ.get("KeyVaultName")
+key_vault_url = f"https://{key_vault_name}.vault.azure.net/"
+password = get_key_vault_secret(key_vault_url, os.environ.get("CibusPassSecretName"))
 
 # Step 1: Perform login and get the token cookie
 soc = ShufersalOrderController(username, password, company)
@@ -28,6 +47,4 @@ for voucher in voucher_prices:
     pp(cart_info)
     # Step 5: Apply order
     # TODO: Apply_order (==Pay)
-    
-
 
