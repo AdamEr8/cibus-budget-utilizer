@@ -19,7 +19,17 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
 
         cart_data = response.json()
         return cart_data
-
+    
+    def empty_cart(self):
+        empty_cart_payload = {
+            "type": "prx_del_cart"
+        }
+        response = self._post_sodexo_request(empty_cart_payload)
+        if response.status_code != 200:
+            print("Emptying cart failed. Status code:",
+                  response.status_code)
+            exit()
+    
     def fetch_voucher_options(self) -> None:
         # TODO: Fill other vouchers, or actually fetch them from the website and parse
         self.voucher_options = {
@@ -66,7 +76,7 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
             "order_type": 2,
             "dish_list": self.voucher_options[voucher_price]
         }
-        response = response = self._post_sodexo_request(add_to_cart_payload)
+        response = self._post_sodexo_request(add_to_cart_payload)
         if response.status_code != 200:
             print("Adding item to cart failed. Status code:", response.status_code)
             exit()
@@ -76,7 +86,7 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
             "type": "prx_apply_order",
             "order_time": datetime.now().strftime("%H:%M")
         }
-        response = response = self._post_sodexo_request(apply_order_payload)
+        response = self._post_sodexo_request(apply_order_payload)
         if response.status_code != 200:
             print("Applying order failed. Status code:", response.status_code)
             exit()
