@@ -1,2 +1,4 @@
 requests
 azure-functions
+azure.identity
+azure.keyvault.secrets

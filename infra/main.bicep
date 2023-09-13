@@ -122,10 +122,6 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
           value: 'https://fnstor7ee5ua3kvdo52.blob.core.windows.net/pack/app.zip'
         }
-        {
-          name: 'KeyVaultName'
-          value: keyVaultName
-        }
 		    {
           name: 'cibusUserName'
           value: cibusUserName
@@ -133,6 +129,26 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
 		    {
           name: 'cibusCompany'
           value: cibusCompany
+        }
+        {
+          name: 'keyVaultName'
+          value: keyVaultName
+        }
+        {
+          name: 'cibusPassSecretName'
+          value: cibusPassSecretName 
+        }
+        {
+          name: 'voucherGeneratorAlgo'
+          value: 'Optimized'
+        }
+        {
+          name: 'allowOverdraft'
+          value: 'true'
+        }
+        {
+          name: 'maxVoucher'
+          value: '100'
         }
       ]
     }
