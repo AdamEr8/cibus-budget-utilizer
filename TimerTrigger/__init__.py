@@ -1,13 +1,12 @@
 import logging
 import os
+import azure.functions as func
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from TimerTrigger.shufersal_order_controller import ShufersalOrderController
 from TimerTrigger.greedy_voucher_generator import GreedyVoucherGenerator
 from TimerTrigger.optimized_voucher_generator import OptimizedVoucherGenerator
 from TimerTrigger.constants import SHUFERSAL_COUPONS
-
-import azure.functions as func
 
 def get_key_vault_secret(key_vault_url, secret_name):
     credential = DefaultAzureCredential()
@@ -32,17 +31,13 @@ def CreateShuferSalOrderController():
     password = get_key_vault_secret(key_vault_url, cibus_pass_secret_name)
     logging.info(f"username: {username}, company: {company}, cibus_pass_secret_name: {cibus_pass_secret_name} readed from environment variables")
 
-
-    # Step 1: Perform login and get the token cookie
     return ShufersalOrderController(username, password, company)
 
 def main(mytimer: func.TimerRequest) -> None:
     soc = CreateShuferSalOrderController()
     soc.login()
-    # Step 2: Get the budget
     budget = soc.get_budget()
     logging.info(f"Budget: {budget}")
-    budget = 30
     soc.fetch_voucher_options()
     algo_type = os.environ.get("voucherGeneratorAlgo")
     allow_overdraft = os.environ.get("allowOverdraft").lower() == "true"
@@ -56,10 +51,7 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info(f"Voucher prices: {voucher_prices}")
 
     for voucher in voucher_prices:
-        # Step 3: Add item to the cart (using default dish_id)
         soc.add_voucher_to_cart(voucher)
-        # Step 4: Get cart information
         cart_info = soc.get_cart_info()
         logging.info(f"Cart info: {cart_info}")
-        # Step 5: Apply order
         soc.apply_order()
