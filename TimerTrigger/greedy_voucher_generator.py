@@ -1,4 +1,4 @@
-from abstract_voucher_generator import AbstractVoucherGenerator
+from TimerTrigger.abstract_voucher_generator import AbstractVoucherGenerator
 
 class GreedyVoucherGenerator(AbstractVoucherGenerator):
     def __init__(self, budget, vouchers, allow_overdraft = False, max_voucher = None):

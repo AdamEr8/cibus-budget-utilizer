@@ -1,5 +1,5 @@
 from datetime import datetime
-from cibus_budget_base_order_controller import CibusBudgetBaseOrderController
+from TimerTrigger.cibus_budget_base_order_controller import CibusBudgetBaseOrderController
 
 
 class ShufersalOrderController(CibusBudgetBaseOrderController):

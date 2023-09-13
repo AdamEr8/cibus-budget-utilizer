@@ -1,6 +1,6 @@
 import requests
 import json
-from abstract_order_controller import AbstractOrderController
+from TimerTrigger.abstract_order_controller import AbstractOrderController
 
 # Base Class for controllers that use budget from Cibus (which for us is everything...)
 class CibusBudgetBaseOrderController(AbstractOrderController):

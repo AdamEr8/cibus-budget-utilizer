@@ -2,8 +2,6 @@
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "python",
-    "KeyVaultName":"", 
-    "CibusPassSecretName": "CibusPass"
+    "FUNCTIONS_WORKER_RUNTIME": "python"  
   }
 }
