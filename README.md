@@ -18,8 +18,8 @@ func azure functionapp publish < YOUR_FUNCION_APP_NAME_HERE >
 ``` 
 
 ## Configurations
-1. In the main.bicep file, you can configure the following values:
-  1. "voucherGeneratorAlgo": 'Optimized' value will use one algo and 'Greedy' will use another voucher prices algo (Greedy if none provided).
-  2. "allowOverdraft": If true, the minimum amount of out-of-pocket pay will be allowed when pruchasing coupons. If false, some cibus credit will remain and not be utilized.
-  3. "maxVoucher": the maximum value of the vouchers you would like to have (shufersal doesn't respect partial vouchers so 200 shekels voucher might be inconvenient) the default is 100.
-2. in the function.json file, you can configure the timing of function trigger. For further info, see [the official docs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=python-v2%2Cin-process%2Cnodejs-v4&pivots=programming-language-python#configuration)
+1. main.bicep file holds several configs. If you change any, re-run setup from the top. You can configure the following values:
+   1. "voucherGeneratorAlgo": 'Optimized' value will use one algo and 'Greedy' will use another voucher prices algo (Greedy if none provided).
+   2. "allowOverdraft": If true, the minimum amount of out-of-pocket pay will be allowed when pruchasing coupons. If false, some cibus credit will remain and not be utilized.
+   3. "maxVoucher": the maximum value of the vouchers you would like to have (shufersal doesn't respect partial vouchers so 200 shekels voucher might be inconvenient) the default is 100.
+2. In the function.json file, you can configure the timing of function trigger. For further info, see [the official docs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=python-v2%2Cin-process%2Cnodejs-v4&pivots=programming-language-python#configuration). If you make any changes, rerun `func azure functionapp publish` command as seen in setup mode.
