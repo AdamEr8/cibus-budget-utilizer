@@ -46,7 +46,7 @@ def main(mytimer: func.TimerRequest) -> None:
     if algo_type == "Optimized":
         algo = OptimizedVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = allow_overdraft, max_voucher = max_voucher)
     else:
-        algo = GreedyVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = max_voucher, max_voucher = max_voucher)
+        algo = GreedyVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = allow_overdraft, max_voucher = max_voucher)
     voucher_prices = algo.genenrate_vouchers()
     logging.info(f"Voucher prices: {voucher_prices}")
 
