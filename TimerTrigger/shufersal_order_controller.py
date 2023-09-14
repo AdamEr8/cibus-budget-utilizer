@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from TimerTrigger.cibus_budget_base_order_controller import CibusBudgetBaseOrderController
 
@@ -13,8 +14,7 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
         }
         response = self._post_sodexo_request(get_cart_payload)
         if response.status_code != 200:
-            print("Getting cart information failed. Status code:",
-                  response.status_code)
+            logging.error("Getting cart information failed. Status code: %d", response.status_code)
             exit()
 
         cart_data = response.json()
@@ -26,7 +26,7 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
         }
         response = self._post_sodexo_request(empty_cart_payload)
         if response.status_code != 200:
-            print("Emptying cart failed. Status code:",
+            logging.info("Emptying cart failed. Status code:",
                   response.status_code)
             exit()
     
@@ -78,15 +78,19 @@ class ShufersalOrderController(CibusBudgetBaseOrderController):
         }
         response = self._post_sodexo_request(add_to_cart_payload)
         if response.status_code != 200:
-            print("Adding item to cart failed. Status code:", response.status_code)
+            logging.error("Adding item to cart failed. Status code: %d", response.status_code)
             exit()
 
     def apply_order(self):
+        logging.info("Applying order...")
         apply_order_payload = {
             "type": "prx_apply_order",
             "order_time": datetime.now().strftime("%H:%M")
         }
         response = self._post_sodexo_request(apply_order_payload)
+        logging.debug("Done appplying order")
+        response_data = response.json()
+        logging.debug(f"response_data: {response_data}")
         if response.status_code != 200:
-            print("Applying order failed. Status code:", response.status_code)
+            logging.error("Applying order failed. Status code: %d", response.status_code)
             exit()
