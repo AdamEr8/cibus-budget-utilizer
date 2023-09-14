@@ -44,9 +44,9 @@ def main(mytimer: func.TimerRequest) -> None:
     max_voucher = int(os.environ.get("maxVoucher"))
     logging.info(f"algo_type: {algo_type}, allow_overdraft: {allow_overdraft}, max_voucher: {max_voucher} readed from environment variables")
     if algo_type == "Optimized":
-        algo = OptimizedVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = allow_overdraft, max_voucher = 100)
+        algo = OptimizedVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = allow_overdraft, max_voucher = max_voucher)
     else:
-        algo = GreedyVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = max_voucher, max_voucher = 100)
+        algo = GreedyVoucherGenerator(budget, SHUFERSAL_COUPONS, allow_overdraft = max_voucher, max_voucher = max_voucher)
     voucher_prices = algo.genenrate_vouchers()
     logging.info(f"Voucher prices: {voucher_prices}")
 
